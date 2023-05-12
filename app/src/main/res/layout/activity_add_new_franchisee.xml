@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f9f8fe"
+    tools:context=".SFA_Activity.AddNewFranchiseActivity">
+
+    <include
+        android:id="@+id/toolbarkjngb"
+        layout="@layout/sfatoolbar" />
+
+    <LinearLayout
+        android:id="@+id/layout_wa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarkjngb"
+        android:background="@drawable/blue_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/C3dp">
+
+        <TextView
+            android:id="@+id/headtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/basic"
+            android:paddingLeft="8dp"
+            android:paddingBottom="4dp"
+            android:text="Add New Franchise"
+            android:textAlignment="textStart"
+            android:textAllCaps="true"
+            android:textColor="#FFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/sv_add_new_distributor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_wa"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_headquarters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Headquarters"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_head_quarters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_headquarters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Select the Headquarters"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_distributors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_distributor_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Distributor Name"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_distributor_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Distributor Name"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_erp_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="ERP Code"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_erp_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the ERP Code"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="GST Number"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_gst_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the GST Number"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Distributor ID"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Username"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Password"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Contact Person Name"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_contact_person"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Contact Person Name"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Mobile Number"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Mobile Number"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the email address"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Address"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Address"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Type"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Type"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Norm Value"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_norm_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Norm Value"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Field Officer"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
+
+                    <EditText
+                        android:id="@+id/et_field_officer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Enter the Field Officer"
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>-->
+
+            <LinearLayout
+                android:id="@+id/dynamic_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#f9f8fe"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_blue"
+                android:text="SAVE"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarkjngb"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"></com.facebook.shimmer.ShimmerFrameLayout>
+
+
+</RelativeLayout>
