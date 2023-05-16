@@ -1,7 +1,9 @@
 package com.saneforce.milksales.SFA_Activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,15 +21,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.saneforce.milksales.Activity_Hap.AllowancCapture;
 import com.saneforce.milksales.Activity_Hap.ProductImageView;
 import com.saneforce.milksales.Common_Class.Common_Class;
+import com.saneforce.milksales.Common_Class.Common_Model;
+import com.saneforce.milksales.Common_Class.Constants;
 import com.saneforce.milksales.Common_Class.Shared_Common_Pref;
 import com.saneforce.milksales.Interface.ApiClient;
 import com.saneforce.milksales.Interface.ApiInterface;
 import com.saneforce.milksales.Interface.OnImagePickListener;
 import com.saneforce.milksales.R;
+import com.saneforce.milksales.SFA_Adapter.CommonAdapterForDropdown;
+import com.saneforce.milksales.SFA_Model_Class.CommonModelForDropDown;
 import com.saneforce.milksales.common.FileUploadService;
 
 import org.json.JSONArray;
@@ -33,7 +45,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +70,9 @@ public class AddNewDistributor extends AppCompatActivity {
     Common_Class common_class;
     Shared_Common_Pref pref;
     SharedPreferences UserDetails;
+
+    CommonAdapterForDropdown adapter;
+    ArrayList<CommonModelForDropDown> list, stateList;
 
     String customer_photo_url = "", customer_photo_name = "", shop_photo_url = "", shop_photo_name = "", regionStr = "", officeCodeStr = "", officeNameStr = "", routeCodeStr = "",
             routeNameStr = "", channelStr = "", cityStr = "", pincodeStr = "", stateCodeStr = "", customerNameStr = "", ownerNameStr = "", shopAddressStr = "",
@@ -250,6 +267,197 @@ public class AddNewDistributor extends AppCompatActivity {
 
         submit.setOnClickListener(v -> ValidateFields());
 
+        // Preparing State Code
+        if (Common_Class.isNullOrEmpty(pref.getvalue(Constants.STATE_LIST))) {
+            common_class.getDb_310Data(Constants.STATE_LIST, this);
+        }
+        try {
+            JSONObject object = new JSONObject(pref.getvalue(Constants.STATE_LIST));
+            JSONArray array = object.getJSONArray("Data");
+            stateList = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+                String id = jsonObject.getString("State_Code");
+                String title = jsonObject.getString("StateName");
+                stateList.add(new CommonModelForDropDown(id, title));
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        // Preparing Office Code & Office Name
+        select_sales_office_name.setText(UserDetails.getString("SfName", ""));
+        select_sales_office_code.setText(UserDetails.getString("Sfcode", ""));
+        type_sales_executive_employee_id.setText(UserDetails.getString("EmpId", ""));
+        type_sales_executive_employee_id.setEnabled(false);
+
+        // Preparing Route Code & Route Name
+        select_route_name.setText(pref.getvalue(Constants.Route_name));
+        select_route_code.setText(pref.getvalue(Constants.Route_Id));
+
+        select_channel.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+
+            title.setText("Select Channel");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+
+            list = new ArrayList<>();
+            list.add(new CommonModelForDropDown("1", "GT-FRESH"));
+            list.add(new CommonModelForDropDown("1", "TDC"));
+            list.add(new CommonModelForDropDown("1", "GT-ICECREAM"));
+            list.add(new CommonModelForDropDown("1", "GT-RETAIL"));
+            list.add(new CommonModelForDropDown("1", "HORECA"));
+            list.add(new CommonModelForDropDown("1", "MT"));
+            list.add(new CommonModelForDropDown("1", "FI"));
+
+            adapter = new CommonAdapterForDropdown(list, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                select_channel.setText(model.getTitle());
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
+        select_mode_of_payment.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+
+            title.setText("Select Mode of Payment");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+
+            list = new ArrayList<>();
+            list.add(new CommonModelForDropDown("1", "App"));
+
+            adapter = new CommonAdapterForDropdown(list, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                select_mode_of_payment.setText(model.getTitle());
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
+        select_agreement_copy.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+
+            title.setText("Select Agreement Copy");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+
+            list = new ArrayList<>();
+            list.add(new CommonModelForDropDown("1", "TDC Agreement"));
+            list.add(new CommonModelForDropDown("1", "TOT"));
+
+            adapter = new CommonAdapterForDropdown(list, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                select_agreement_copy.setText(model.getTitle());
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
+        select_bank_details.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+
+            title.setText("Select Bank Details");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+
+            list = new ArrayList<>();
+            list.add(new CommonModelForDropDown("1", "Passbook"));
+            list.add(new CommonModelForDropDown("1", "Cheque"));
+
+            adapter = new CommonAdapterForDropdown(list, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                select_bank_details.setText(model.getTitle());
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
+        select_region.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+
+            title.setText("Select Region");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+
+            list = new ArrayList<>();
+            list.add(new CommonModelForDropDown("1", "Chennai"));
+            list.add(new CommonModelForDropDown("1", "Hyderabad"));
+            list.add(new CommonModelForDropDown("1", "Vijayawada"));
+            list.add(new CommonModelForDropDown("1", "Bangalore"));
+
+            adapter = new CommonAdapterForDropdown(list, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                select_region.setText(model.getTitle());
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
+        select_state_code.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+
+            title.setText("Select State Code");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+            adapter = new CommonAdapterForDropdown(stateList, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                select_state_code.setText(model.getId());
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
     }
 
     private void showImage(String customer_photo_url) {
@@ -268,7 +476,6 @@ public class AddNewDistributor extends AppCompatActivity {
     }
 
     private void ValidateFields() {
-
         regionStr = select_region.getText().toString().trim();
         officeCodeStr = select_sales_office_code.getText().toString().trim();
         officeNameStr = select_sales_office_name.getText().toString().trim();
@@ -296,9 +503,7 @@ public class AddNewDistributor extends AppCompatActivity {
         modeOfPaymentStr = select_mode_of_payment.getText().toString().trim();
         depositDetailsStr = type_deposit.getText().toString().trim();
 
-        SubmitForm();
-
-        /*if (TextUtils.isEmpty(customer_photo_name) || TextUtils.isEmpty(customer_photo_url)) {
+        if (TextUtils.isEmpty(customer_photo_name) || TextUtils.isEmpty(customer_photo_url)) {
             Toast.makeText(context, "Please Capture Customer Photo", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(shop_photo_name) || TextUtils.isEmpty(shop_photo_url)) {
             Toast.makeText(context, "Please Capture Shop Photo", Toast.LENGTH_SHORT).show();
@@ -351,8 +556,13 @@ public class AddNewDistributor extends AppCompatActivity {
         } else if (TextUtils.isEmpty(depositImageName) || TextUtils.isEmpty(depositImageFullPath)) {
             Toast.makeText(context, "Please Capture the Deposit Details", Toast.LENGTH_SHORT).show();
         } else {
-            SubmitForm();
-        }*/
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Are you sure want to submit?");
+            builder.setCancelable(false);
+            builder.setPositiveButton("YES", (dialog, which) -> SubmitForm());
+            builder.setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+            builder.create().show();
+        }
     }
 
     private void SubmitForm() {
@@ -360,6 +570,14 @@ public class AddNewDistributor extends AppCompatActivity {
         progressDialog.setMessage("Creating New Distributor");
         progressDialog.setCancelable(false);
         progressDialog.show();
+
+        uploadImage(customer_photo_name, customer_photo_url);
+        uploadImage(shop_photo_name, shop_photo_url);
+        uploadImage(bankImageName, bankImageFullPath);
+        uploadImage(FSSAIImageName, FSSAIImageFullPath);
+        uploadImage(GSTImageName, GSTImageFullPath);
+        uploadImage(agreementImageName, agreementImageFullPath);
+        uploadImage(depositImageName, depositImageFullPath);
 
         JSONArray data = new JSONArray();
         JSONObject object = new JSONObject();
