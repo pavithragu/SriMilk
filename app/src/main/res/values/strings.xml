@@ -116,7 +116,7 @@
     <string name="channel">Channel<font fgcolor='#E53935'> *</font></string>
     <string name="city">City<font fgcolor='#E53935'> *</font></string>
     <string name="postal_code_pincode">Postal Code (Pincode)<font fgcolor='#E53935'> *</font></string>
-    <string name="state_code">State Code<font fgcolor='#E53935'> *</font></string>
+    <string name="state_code">State<font fgcolor='#E53935'> *</font></string>
     <string name="name_of_the_customer">Name of the Customer<font fgcolor='#E53935'> *</font></string>
     <string name="name_of_the_owner">Name of the Owner<font fgcolor='#E53935'> *</font></string>
     <string name="address_of_the_shop">Address of the Shop<font fgcolor='#E53935'> *</font></string>

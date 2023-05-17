@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SFA_Activity.AddNewDistributor">
+    tools:context=".SFA_Activity.AddNewDistributor"
+    tools:ignore="SpUsage,HardcodedText,Autofill,TextFields,ContentDescription">
 
     <include layout="@layout/sfatoolbar" />
 
@@ -151,29 +152,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C8dp"
                 android:layout_marginTop="@dimen/C15dp"
-                android:text="@string/sales_office_code"
-                android:textSize="@dimen/C14dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/select_sales_office_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C10dp"
-                android:layout_marginTop="@dimen/C5dp"
-                android:background="@drawable/textbox_bg"
-                android:elevation="5dp"
-                android:hint="Select Sales Office Code"
-                android:padding="@dimen/C8dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/C13dp"
-                app:drawableEndCompat="@drawable/ic_arrow_drop_down" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C8dp"
-                android:layout_marginTop="@dimen/C15dp"
                 android:text="@string/sales_office_name"
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />
@@ -187,29 +165,6 @@
                 android:background="@drawable/textbox_bg"
                 android:elevation="5dp"
                 android:hint="Select Sales Office Name"
-                android:padding="@dimen/C8dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/C13dp"
-                app:drawableEndCompat="@drawable/ic_arrow_drop_down" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C8dp"
-                android:layout_marginTop="@dimen/C15dp"
-                android:text="@string/route_code"
-                android:textSize="@dimen/C14dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/select_route_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C10dp"
-                android:layout_marginTop="@dimen/C5dp"
-                android:background="@drawable/textbox_bg"
-                android:elevation="5dp"
-                android:hint="Select Route Code"
                 android:padding="@dimen/C8dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/C13dp"
@@ -235,7 +190,8 @@
                 android:hint="Select Route Name"
                 android:padding="@dimen/C8dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/C13dp" />
+                android:textSize="@dimen/C13dp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down"  />
 
             <TextView
                 android:layout_width="match_parent"
@@ -317,14 +273,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/select_state_code"
+                android:id="@+id/select_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C10dp"
                 android:layout_marginTop="@dimen/C5dp"
                 android:background="@drawable/textbox_bg"
                 android:elevation="5dp"
-                android:hint="Select State Code"
+                android:hint="Select State"
                 android:padding="@dimen/C8dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/C13dp"
@@ -385,16 +341,27 @@
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />
 
+            <fragment
+                android:id="@+id/route_map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginHorizontal="@dimen/C12dp"
+                android:layout_marginTop="@dimen/C5dp" />
+
             <EditText
                 android:id="@+id/type_address_of_the_shop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C10dp"
-                android:layout_marginTop="@dimen/C5dp"
+                android:layout_marginTop="@dimen/C8dp"
                 android:background="@drawable/textbox_bg"
                 android:elevation="5dp"
+                android:gravity="start"
+                android:lines="4"
+                android:minLines="4"
+                android:inputType="textMultiLine"
                 android:hint="Enter Address of the Shop"
-                android:inputType="textPostalAddress"
                 android:padding="@dimen/C8dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/C13dp" />
@@ -416,8 +383,11 @@
                 android:layout_marginTop="@dimen/C5dp"
                 android:background="@drawable/textbox_bg"
                 android:elevation="5dp"
+                android:gravity="start"
+                android:lines="4"
+                android:minLines="4"
+                android:inputType="textMultiLine"
                 android:hint="Enter Residence Address"
-                android:inputType="textPostalAddress"
                 android:padding="@dimen/C8dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/C13dp" />
@@ -547,50 +517,100 @@
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/type_aadhaar_number"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C10dp"
-                android:layout_marginTop="@dimen/C5dp"
-                android:background="@drawable/textbox_bg"
-                android:elevation="5dp"
-                android:hint="Enter Aadhaar Number"
-                android:inputType="number"
-                android:maxLength="12"
-                android:padding="@dimen/C8dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/C13dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/type_aadhaar_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/C10dp"
+                    android:layout_marginTop="@dimen/C5dp"
+                    android:layout_marginBottom="@dimen/C15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/textbox_bg"
+                    android:elevation="5dp"
+                    android:hint="Enter Aadhaar Number"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:padding="@dimen/C8dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/C13dp" />
+
+                <ImageView
+                    android:id="@+id/display_aadhaar_number"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/C8dp"
+                    android:src="@drawable/ic_round_photo_camera_24"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/capture_aadhaar_number"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/C8dp"
+                    android:src="@drawable/ic_round_photo_camera_24" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C8dp"
-                android:layout_marginTop="@dimen/C15dp"
                 android:text="@string/pan_number"
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/type_pan_number"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C10dp"
-                android:layout_marginTop="@dimen/C5dp"
-                android:background="@drawable/textbox_bg"
-                android:elevation="5dp"
-                android:hint="Enter PAN Number"
-                android:inputType="text"
-                android:maxLength="10"
-                android:padding="@dimen/C8dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/C13dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/type_pan_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/C10dp"
+                    android:layout_marginTop="@dimen/C5dp"
+                    android:layout_marginBottom="@dimen/C15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/textbox_bg"
+                    android:elevation="5dp"
+                    android:hint="Enter PAN Number"
+                    android:inputType="text"
+                    android:maxLength="10"
+                    android:padding="@dimen/C8dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/C13dp" />
+
+                <ImageView
+                    android:id="@+id/display_pan_number"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/C8dp"
+                    android:src="@drawable/ic_round_photo_camera_24"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/capture_pan_number"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/C8dp"
+                    android:src="@drawable/ic_round_photo_camera_24" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C8dp"
-                android:layout_marginTop="@dimen/C15dp"
                 android:text="@string/bank_details"
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />

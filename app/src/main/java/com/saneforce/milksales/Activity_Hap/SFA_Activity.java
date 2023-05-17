@@ -216,7 +216,7 @@ public class SFA_Activity extends AppCompatActivity implements View.OnClickListe
                     menuList.add(new ListModel("", "Outlets", "", "", "", R.drawable.ic_baseline_storefront_24));
                     menuList.add(new ListModel("", "Nearby Outlets", "", "", "", R.drawable.ic_outline_near_me_24));
                     menuList.add(new ListModel("", "Reports", "", "", "", R.drawable.ic_reports));
-                    menuList.add(new ListModel("", "Franchise", "", "", "", R.drawable.ic_franchise));
+                    menuList.add(new ListModel("", "Distributor", "", "", "", R.drawable.ic_franchise));
                     menuList.add(new ListModel("", "My Team", "", "", "", R.drawable.ic_baseline_groups_24));
                     menuList.add(new ListModel("", "Projection", "", "", "", R.drawable.ic_projection));
                     // menuList.add(new ListModel("", "Stock Audit", "", "", "", R.drawable.ic_stock_audit));
@@ -299,7 +299,7 @@ public class SFA_Activity extends AppCompatActivity implements View.OnClickListe
                     case "Outlets":
                         common_class.CommonIntentwithNEwTask(Outlet_Info_Activity.class);
                         break;
-                    case "Franchise":
+                    case "Distributor":
                         common_class.CommonIntentwithNEwTask(Reports_Distributor_Name.class);
                         break;
                     case "Reports":
