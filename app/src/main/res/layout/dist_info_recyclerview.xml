@@ -32,10 +32,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:text="hkhhk"
                     android:id="@+id/tvDistName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="hkhhk"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -55,10 +55,10 @@
                         app:tint="@color/colorPrimaryDark" />
 
                     <TextView
-                       android:text="90866"
                         android:id="@+id/tvDistPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="90866"
                         android:textColor="@color/grey_600"
                         android:textSize="@dimen/C12dp"
                         android:textStyle="bold">
@@ -68,10 +68,10 @@
 
 
                 <TextView
-                    android:text="hskkk"
                     android:id="@+id/tvDistAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="hskkk"
                     android:textSize="11sp"
                     android:visibility="visible" />
 
@@ -200,12 +200,12 @@
 
 
         <TextView
-            android:text="Lat:80.00747 Lng:80.8039208"
             android:id="@+id/tvLatLng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="sans-serif"
+            android:text="Lat:80.00747 Lng:80.8039208"
 
             android:textSize="9sp" />
 
@@ -254,6 +254,32 @@
                 android:fontFamily="sans-serif"
                 android:gravity="end"
                 android:textSize="9sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/C8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textStyle="bold"
+                android:text="Status: Pending"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="Remarks: "
+                android:textSize="11dp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

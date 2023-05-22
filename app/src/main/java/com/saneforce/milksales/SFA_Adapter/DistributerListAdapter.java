@@ -3,6 +3,7 @@ package com.saneforce.milksales.SFA_Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +73,29 @@ public class DistributerListAdapter extends RecyclerView.Adapter<DistributerList
             holder.tvDistAdd.setText(itm.getString("Addr1"));
             holder.tvLatLng.setText("");
 
+            String flag = itm.getString("flag");
+            if (flag.equals("4")) {
+                holder.status.setText("Status: Pending");
+                holder.status.setTextColor(Color.parseColor("#ffa500"));
+                holder.remarks.setVisibility(View.GONE);
+            } else if (flag.equals("3")) {
+                holder.status.setText("Status: Rejected");
+                holder.status.setTextColor(Color.parseColor("#b22222"));
+                holder.remarks.setVisibility(View.VISIBLE);
+                holder.remarks.setText("Remarks: " + itm.getString("remarks"));
+            } else if (flag.equals("2")) {
+                holder.status.setText("Status: 1st Line Approval");
+                holder.remarks.setVisibility(View.GONE);
+            } else if (flag.equals("1")) {
+                holder.status.setText("Status: Deactivated");
+                holder.status.setTextColor(Color.GRAY);
+                holder.remarks.setVisibility(View.VISIBLE);
+                holder.remarks.setText("Remarks: " + itm.getString("remarks"));
+            } else if (flag.equals("0")) {
+                holder.status.setText("Status: Active");
+                holder.status.setTextColor(Color.parseColor("#3cb371"));
+                holder.remarks.setVisibility(View.GONE);
+            }
 
             NumberFormat format1 = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
 
@@ -292,7 +316,7 @@ public class DistributerListAdapter extends RecyclerView.Adapter<DistributerList
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvDistName, tvbal, tvAvailBal, tvAmtBlk, tvBalUpdTime, tvDistAdd, tvLocUpdTime, tvLatLng, tvMobile;
+        public TextView tvDistName, tvbal, tvAvailBal, tvAmtBlk, tvBalUpdTime, tvDistAdd, tvLocUpdTime, tvLatLng, tvMobile, status, remarks;
         RelativeLayout rlRefresh;
         LinearLayout llDirection, llParent, llRefreshLoc, llMobile;
         ProgressBar pb;
@@ -314,6 +338,8 @@ public class DistributerListAdapter extends RecyclerView.Adapter<DistributerList
             tvLatLng = view.findViewById(R.id.tvLatLng);
             llMobile = view.findViewById(R.id.btnCallMob);
             tvMobile = view.findViewById(R.id.tvDistPhone);
+            status = view.findViewById(R.id.status);
+            remarks = view.findViewById(R.id.remarks);
 
 
         }

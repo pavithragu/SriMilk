@@ -45,8 +45,10 @@ import com.saneforce.milksales.Interface.OnImagePickListener;
 import com.saneforce.milksales.R;
 import com.saneforce.milksales.SFA_Adapter.CommonAdapterForDropdown;
 import com.saneforce.milksales.SFA_Adapter.CommonAdapterForDropdownWithFilter;
+import com.saneforce.milksales.SFA_Adapter.RegionAdapter;
 import com.saneforce.milksales.SFA_Model_Class.CommonModelForDropDown;
 import com.saneforce.milksales.SFA_Model_Class.CommonModelWithFourString;
+import com.saneforce.milksales.SFA_Model_Class.CommonModelWithThreeString;
 import com.saneforce.milksales.common.FileUploadService;
 import com.saneforce.milksales.common.LocationFinder;
 
@@ -72,7 +74,7 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
 
     TextView select_region, select_sales_office_name, select_route_name, select_channel, select_state, date_of_creation,
             select_mode_of_payment, submit, select_bank_details, select_agreement_copy;
-    ImageView display_customer_photo, capture_customer_photo, display_shop_photo, capture_shop_photo, display_bank_details, capture_bank_details, display_fssai, capture_fssai,
+    ImageView refreshLocation, display_customer_photo, capture_customer_photo, display_shop_photo, capture_shop_photo, display_bank_details, capture_bank_details, display_fssai, capture_fssai,
             display_gst, capture_gst, display_agreement_copy, capture_agreement_copy, display_deposit, capture_deposit, home, display_aadhaar_number, capture_aadhaar_number,
             display_pan_number, capture_pan_number;
     EditText type_city, type_pincode, type_name_of_the_customer, type_name_of_the_owner, type_address_of_the_shop, type_residence_address, type_mobile_number, type_email_id,
@@ -84,8 +86,10 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
     SharedPreferences UserDetails;
 
     CommonAdapterForDropdown adapter;
+    RegionAdapter regionAdapter;
     CommonAdapterForDropdownWithFilter filterAdapter;
-    ArrayList<CommonModelForDropDown> regionList, ChannelList, stateList, BankList, AgreementList, MOPList;
+    ArrayList<CommonModelForDropDown> ChannelList, stateList, BankList, AgreementList, MOPList;
+    ArrayList<CommonModelWithThreeString> regionList, regionFilteredList;
     ArrayList<CommonModelWithFourString> officeList, filteredOfficeList, tempOfficeList, routeList, filteredRouteList, tempRouteList;
 
     String customer_photo_url = "", customer_photo_name = "", shop_photo_url = "", shop_photo_name = "", regionStr = "", regionCodeStr = "", officeCodeStr = "", officeNameStr = "", routeCodeStr = "",
@@ -148,6 +152,7 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
         capture_aadhaar_number = findViewById(R.id.capture_aadhaar_number);
         display_pan_number = findViewById(R.id.display_pan_number);
         capture_pan_number = findViewById(R.id.capture_pan_number);
+        refreshLocation = findViewById(R.id.refreshLocation);
 
         common_class = new Common_Class(this);
         pref = new Shared_Common_Pref(this);
@@ -155,6 +160,7 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
         common_class.gotoHomeScreen(context, home);
 
         regionList = new ArrayList<>();
+        regionFilteredList = new ArrayList<>();
         ChannelList = new ArrayList<>();
         stateList = new ArrayList<>();
         BankList = new ArrayList<>();
@@ -368,7 +374,43 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
         type_sales_executive_employee_id.setText(UserDetails.getString("EmpId", ""));
         type_sales_executive_employee_id.setEnabled(false);
 
+        select_state.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
+            builder.setView(view);
+            builder.setCancelable(false);
+            TextView title = view.findViewById(R.id.title);
+            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
+            TextView close = view.findViewById(R.id.close);
+            title.setText("Select State");
+            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+            adapter = new CommonAdapterForDropdown(stateList, context);
+            recyclerView1.setAdapter(adapter);
+            AlertDialog dialog = builder.create();
+            adapter.setSelectItem((model, position) -> {
+                regionFilteredList.clear();
+                for (CommonModelWithThreeString modelForDropDown : regionList) {
+                    if (modelForDropDown.getReference().equalsIgnoreCase(model.getId())) {
+                        regionFilteredList.add(modelForDropDown);
+                    }
+                }
+                select_state.setText(model.getTitle());
+                stateCodeStr = model.getId();
+                select_region.setText("");
+                regionCodeStr = "";
+                dialog.dismiss();
+            });
+            close.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
+        });
         select_region.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(select_state.getText().toString().trim())) {
+                Toast.makeText(context, "Please Select State", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (regionFilteredList.isEmpty()) {
+                Toast.makeText(context, "No Region found for the selected State", Toast.LENGTH_SHORT).show();
+                return;
+            }
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
             builder.setView(view);
@@ -378,10 +420,10 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
             TextView close = view.findViewById(R.id.close);
             title.setText("Select Region");
             recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-            adapter = new CommonAdapterForDropdown(regionList, context);
-            recyclerView1.setAdapter(adapter);
+            regionAdapter = new RegionAdapter(regionFilteredList, context);
+            recyclerView1.setAdapter(regionAdapter);
             AlertDialog dialog = builder.create();
-            adapter.setSelectItem((model, position) -> {
+            regionAdapter.setSelectItem((model, position) -> {
                 regionCodeStr = model.getId();
                 select_region.setText(model.getTitle());
                 officeCodeStr = "";
@@ -513,27 +555,6 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
             close.setOnClickListener(v1 -> dialog.dismiss());
             dialog.show();
         });
-        select_state.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
-            builder.setView(view);
-            builder.setCancelable(false);
-            TextView title = view.findViewById(R.id.title);
-            RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView);
-            TextView close = view.findViewById(R.id.close);
-            title.setText("Select State");
-            recyclerView1.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-            adapter = new CommonAdapterForDropdown(stateList, context);
-            recyclerView1.setAdapter(adapter);
-            AlertDialog dialog = builder.create();
-            adapter.setSelectItem((model, position) -> {
-                select_state.setText(model.getTitle());
-                stateCodeStr = model.getId();
-                dialog.dismiss();
-            });
-            close.setOnClickListener(v1 -> dialog.dismiss());
-            dialog.show();
-        });
         select_bank_details.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.common_dialog_with_rv, null, false);
@@ -594,16 +615,11 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
             close.setOnClickListener(v1 -> dialog.dismiss());
             dialog.show();
         });
-
-        new LocationFinder(this, location -> {
-            try {
-                Lat = location.getLatitude();
-                Long = location.getLongitude();
-                getCompleteAddressString(Lat, Long);
-                SetMap();
-            } catch (Exception ignored) {
-            }
+        refreshLocation.setOnClickListener(v -> {
+            getLocation();
+            refreshLocation.setVisibility(View.GONE);
         });
+        getLocation();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.route_map);
@@ -612,6 +628,19 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
         }
 
         PrepareDropdownLists();
+    }
+
+    private void getLocation() {
+        new LocationFinder(this, location -> {
+            try {
+                refreshLocation.setVisibility(View.VISIBLE);
+                Lat = location.getLatitude();
+                Long = location.getLongitude();
+                getCompleteAddressString(Lat, Long);
+                SetMap();
+            } catch (Exception ignored) {
+            }
+        });
     }
 
     private void setAdapterForRoute(ArrayList<CommonModelWithFourString> filteredRouteList, AlertDialog dialog, RecyclerView recyclerView1) {
@@ -636,10 +665,9 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
             select_route_name.setText("");
             filteredRouteList.clear();
             for (CommonModelWithFourString modelWithThreeString : routeList) {
-                filteredRouteList.add(modelWithThreeString);
-                /*if (modelWithThreeString.getRouteReference().equalsIgnoreCase(routeReference)) {
+                if (modelWithThreeString.getRouteReference().equalsIgnoreCase(routeReference)) {
                     filteredRouteList.add(modelWithThreeString);
-                }*/
+                }
             }
         });
     }
@@ -671,10 +699,12 @@ public class AddNewDistributor extends AppCompatActivity implements OnMapReadyCa
                             ChannelList.clear();
                             JSONArray array = object.getJSONArray("regionResponse");
                             for (int i = 0; i < array.length(); i++) {
-                                String id = array.getJSONObject(i).getString("id");
-                                String title = array.getJSONObject(i).getString("title");
-                                Log.e("ksjdhksd", "regionResponse: " + id + ", " + title);
-                                regionList.add(new CommonModelForDropDown(id, title));
+                                // Area_code, Area_name, State_Code
+                                String id = array.getJSONObject(i).getString("Area_code");
+                                String title = array.getJSONObject(i).getString("Area_name");
+                                String stateCode = array.getJSONObject(i).getString("State_Code");
+                                Log.e("ksjdhksd", "regionResponse: " + id + ", " + title + ", state code: " + stateCode);
+                                regionList.add(new CommonModelWithThreeString(id, title, stateCode));
                             }
                             JSONArray officeResponse = object.getJSONArray("officeResponse");
                             for (int i = 0; i < officeResponse.length(); i++) {

@@ -129,6 +129,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C8dp"
                 android:layout_marginTop="@dimen/C15dp"
+                android:text="@string/state_code"
+                android:textSize="@dimen/C14dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/select_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/C10dp"
+                android:layout_marginTop="@dimen/C5dp"
+                android:background="@drawable/textbox_bg"
+                android:elevation="5dp"
+                android:hint="Select State"
+                android:padding="@dimen/C8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/C13dp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/C8dp"
+                android:layout_marginTop="@dimen/C15dp"
                 android:text="@string/region"
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />
@@ -268,29 +291,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C8dp"
                 android:layout_marginTop="@dimen/C15dp"
-                android:text="@string/state_code"
-                android:textSize="@dimen/C14dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/select_state"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C10dp"
-                android:layout_marginTop="@dimen/C5dp"
-                android:background="@drawable/textbox_bg"
-                android:elevation="5dp"
-                android:hint="Select State"
-                android:padding="@dimen/C8dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/C13dp"
-                app:drawableEndCompat="@drawable/ic_arrow_drop_down" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/C8dp"
-                android:layout_marginTop="@dimen/C15dp"
                 android:text="@string/name_of_the_customer"
                 android:textSize="@dimen/C14dp"
                 android:textStyle="bold" />
@@ -332,14 +332,28 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/C13dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/C8dp"
                 android:layout_marginTop="@dimen/C15dp"
-                android:text="@string/address_of_the_shop"
-                android:textSize="@dimen/C14dp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address_of_the_shop"
+                    android:textSize="@dimen/C14dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/refreshLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_refresh"/>
+
+            </LinearLayout>
 
             <fragment
                 android:id="@+id/route_map"

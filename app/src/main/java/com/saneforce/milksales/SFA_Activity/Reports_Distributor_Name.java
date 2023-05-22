@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +23,7 @@ import com.saneforce.milksales.Common_Class.Shared_Common_Pref;
 import com.saneforce.milksales.Interface.ApiClient;
 import com.saneforce.milksales.Interface.ApiInterface;
 import com.saneforce.milksales.Interface.LocationEvents;
+import com.saneforce.milksales.Interface.UpdateResponseUI;
 import com.saneforce.milksales.R;
 import com.saneforce.milksales.SFA_Adapter.DistributerListAdapter;
 import com.saneforce.milksales.common.LocationFinder;
@@ -36,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Reports_Distributor_Name extends AppCompatActivity {
+public class Reports_Distributor_Name extends AppCompatActivity implements UpdateResponseUI {
     Gson gson;
     private RecyclerView recyclerView;
     Common_Class common_class;
@@ -50,6 +50,7 @@ public class Reports_Distributor_Name extends AppCompatActivity {
     private JSONArray loc_Arr;
     
     TextView add_new_franchise;
+    JSONArray arr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +68,12 @@ public class Reports_Distributor_Name extends AppCompatActivity {
             ImageView ivToolbarHome = findViewById(R.id.toolbar_home);
             add_new_franchise = findViewById(R.id.add_franchise);
             common_class.gotoHomeScreen(this, ivToolbarHome);
-            JSONArray arr = new JSONArray(shared_common_pref.getvalue(Constants.Distributor_List));
-            setAdapter(arr);
+
+
+            common_class.getDb_310Data(Constants.Distributor_List, this);
 
             // Modified by RAGU M
             add_new_franchise.setOnClickListener(v -> startActivity(new Intent(Reports_Distributor_Name.this, AddNewDistributor.class)));
-
             etSearch.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -112,7 +113,6 @@ public class Reports_Distributor_Name extends AppCompatActivity {
 
     void setAdapter(JSONArray arr) {
         recyclerView.setAdapter(new DistributerListAdapter(arr, R.layout.dist_info_recyclerview, this));
-
     }
 
     public void updateDistlatLng(int id, int pos, JSONArray arr, int flag) {
@@ -230,6 +230,22 @@ public class Reports_Distributor_Name extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onLoadDataUpdateUI(String apiDataResponse, String key) {
+        try {
+            if (apiDataResponse != null) {
+                if (key.equals(Constants.Distributor_List)) {
+                    Log.e("viewResult", "onLoadDataUpdateUI: " + apiDataResponse);
+                    arr = new JSONArray(apiDataResponse);
+                    setAdapter(arr);
+                }
+            }
+        } catch (Exception e) {
+            Log.v(key + "Ex:", e.getMessage());
+        }
+
     }
 
 //    private void distLocUpdate(int id, Location location) {
